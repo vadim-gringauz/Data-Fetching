@@ -16,32 +16,40 @@
         </div>
         <div class="data" id="data-div">
             
-            <table class="table">
-                <thead>
+            <table class="table table-hover">
+                <thead class="thead-dark">
                   <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">E-Mail</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody id="table-body">
-                  <tr>
+                  <!-- <tr id="tr999" onclick="editNew1()">
                     <th scope="row">1</th>
-                    <td id="td-name">
-                        <div id="name-text">Otto</div>
-                        <div id="name-input" hidden="true" style="width:5px"><input type="text" placeholder="Otto"></div>
+                    <td id="td-name999">
+                        <div id="name-text999">Otto</div>
+                        <div id="name-input999" hidden="true" style="width:5px"><input type="text" value="Otto"></div>
+                    </td>
+                    <td id="td-email999">
+                        <div id="email-text999">@mdo</div>
+                        <div id="email-input999" hidden="true" style="width:5px"><input type="text" value="@mdo"></div>
                     </td>
                     <td>
-                        <div id="email-text">@mdo</div>
-                        <div id="email-input" hidden="true" style="width:5px"><input type="text" placeholder="@mdo"></div>
+                        <button type="button" class="btn btn-info btn-sm" id="save-btn999" onclick="" disabled="true">Save</button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-info btn-sm" id="save-btn1" onclick="" disabled="true">Save</button>
-                        <button type="button" class="btn btn-success btn-sm" id="delete-btn1" onclick="toggleEdit()">edit</button>
-                        <button type="button" class="btn btn-danger btn-sm" id="delete-btn1" onclick="">delete</button>
+                        <button type="button" class="btn btn-success btn-sm" id="edit-btn999" onclick="toggleEdit(999)">edit</button>
                     </td>
-                  </tr>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" id="delete-btn999" onclick="">delete</button>
+                    </td>    
+                    </td>
+                  </tr> -->
+                
                                  
                 </tbody>
               </table>
@@ -49,35 +57,63 @@
         </div>
         <div class="form-container">
             <form id="add-record">
+                <table class="table">
+                    <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">E-Mail</th>
+                          <th scope="col">save</th>
+                          <th scope="col">edit</th>
+                          <th scope="col">delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table2-body">
+                      <tr id="tr">
+                        <th scope="row">1</th>
+                        <td id="td-name-new">
+                            <div id="name-input-new" style="width:5px">
+                                <input type="text" class="form-control" placeholder="Name" id="new-name">
+                            </div>
+                        </td>
+                        <td id="td-email-new">
+                            <div id="email-input-new" style="width:5px">
+                                <input type="text" class="form-control" placeholder="E-Mail" id="new-email">
+                            </div>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary mb-2" id="submit-btn">Add New Record</button>
+                        </td>
+                      </tr>
+                                     
+                    </tbody>
+                  </table>
                 <div class="row">
                   <div class="col">
-                    <input type="text" class="form-control" placeholder="Name" id="new-name">
+                    
                   </div>
                   <div class="col">
-                    <input type="text" class="form-control" placeholder="E-Mail" id="new-email">
+                    
                   </div>
                   <div class="col">
-                    <button type="submit" class="btn btn-primary mb-2" id="submit-btn">Add New Record</button>
+                    
                   </div>
                 </div>
             </form>
-            <form id="edit-record">
-                <div class="row">
-                  <div class="col">
-                    <input type="text" class="form-control" placeholder="Name" id="new-name-edit">
-                  </div>
-                  <div class="col">
-                    <input type="text" class="form-control" placeholder="E-Mail" id="new-email-edit">
-                  </div>
-                  <div class="col">
-                    <button type="submit" class="btn btn-primary mb-2" id="edit-btn">edit rec 5</button>
-                  </div>
-                </div>
-            </form>
+            
         </div>
        
     </div>
 
+    <style>
+        button {
+            z-index: 99 !important;
+        }
+
+        tr {
+            z-index: -1;
+        }
+    </style>
     <script src="./data.js"></script>
     
     <!-- Bootstrap script: -->
