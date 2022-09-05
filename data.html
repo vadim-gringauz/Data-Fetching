@@ -28,6 +28,24 @@
                   </tr>
                 </thead>
                 <tbody id="table-body">
+                    <form id="add-record">
+                        <tr>
+                            <th  scope="row">
+                                <button class="btn btn-secondary btn-sm">+</button>
+                            </th>
+                            <td>
+                                <div id="name-input-new">
+                                    <input type="text" class="form-control" placeholder="Name" id="new-name">
+                                </div>
+                            </td>
+                            <td>
+                                <div id="email-input-new">
+                                    <input type="text" class="form-control" placeholder="E-mail" id="new-email">
+                                </div>
+                            </td>
+                            <td colspan="3"><button type="submit" class="btn btn-primary mb-2" id="submit-btn">Add New Record</button></td>
+                        </tr>
+                    </form>
                   <!-- <tr id="tr999" onclick="editNew1()">
                     <th scope="row">1</th>
                     <td id="td-name999">
@@ -54,53 +72,6 @@
                 </tbody>
               </table>
 
-        </div>
-        <div class="form-container">
-            <form id="add-record">
-                <table class="table">
-                    <thead>
-                        <tr>
-                          <th scope="col">ID</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">E-Mail</th>
-                          <th scope="col">save</th>
-                          <th scope="col">edit</th>
-                          <th scope="col">delete</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table2-body">
-                      <tr id="tr">
-                        <th scope="row">1</th>
-                        <td id="td-name-new">
-                            <div id="name-input-new" style="width:5px">
-                                <input type="text" class="form-control" placeholder="Name" id="new-name">
-                            </div>
-                        </td>
-                        <td id="td-email-new">
-                            <div id="email-input-new" style="width:5px">
-                                <input type="text" class="form-control" placeholder="E-Mail" id="new-email">
-                            </div>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary mb-2" id="submit-btn">Add New Record</button>
-                        </td>
-                      </tr>
-                                     
-                    </tbody>
-                  </table>
-                <div class="row">
-                  <div class="col">
-                    
-                  </div>
-                  <div class="col">
-                    
-                  </div>
-                  <div class="col">
-                    
-                  </div>
-                </div>
-            </form>
-            
         </div>
        
     </div>

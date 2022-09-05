@@ -1,6 +1,9 @@
+// URL to connect to on FETCH
 const serverURL = "https://630f59da37925634188d7eb8.mockapi.io/form/list";
-// const serverURL = "file:///C:/Users/vadim/Documents/ITC%20Full%20Stack/05_JavaScript/lesson_06_2.9/new_list.json";
 
+// to know if some record is in Edit mode
+let isEditOn = false;
+let editOpenID = 0;
 
 function getData(url) {
     console.log('Server= ', url);
@@ -34,7 +37,7 @@ function sendPOSTRequest(url, body) {
     .then((response) => {
         response.json().then((result) => {
             console.log(result);
-            // location.reload();
+            location.reload();
         })
     })
     .catch((error) => {
@@ -108,11 +111,12 @@ function addRecordToPage(record) {
     const nameInputDiv = document.createElement("div");
     nameInputDiv.id = "name-input" + record.id;
     nameInputDiv.hidden = true;
-    nameInputDiv.setAttribute("style", "width:5px");
+    // nameInputDiv.setAttribute("style", "width:5px");
     // input box inside the div
     const nameInputBox = document.createElement("input");
     nameInputBox.type = "text";
     nameInputBox.value = record.name;
+    nameInputBox.className = "form-control";
 
     //  Building TD EMAIL
     const tdEmail = document.createElement("td");
@@ -125,11 +129,12 @@ function addRecordToPage(record) {
     const emailInputDiv = document.createElement("div");
     emailInputDiv.id = "email-input" + record.id;
     emailInputDiv.hidden = true;
-    emailInputDiv.setAttribute("style", "width:5px");
+    // emailInputDiv.setAttribute("style", "width:5px");
     // input box inside the div
     const emailInputBox = document.createElement("input");
     emailInputBox.type = "text";
     emailInputBox.value = record.email;
+    emailInputBox.className = "form-control";
 
     //  Building TD for save button
     const tdSaveBtn = document.createElement("td");
@@ -160,39 +165,40 @@ function addRecordToPage(record) {
     btnDelete.className = "btn btn-danger btn-sm";
     btnDelete.innerHTML = "Delete";
 
-    
+    // Appending all objects:
     document.getElementById("table-body").appendChild(tr);
-    const newAppendedTr = document.getElementById("tr" + record.id);
-    document.getElementById("tr" + record.id).setAttribute( "onClick", "turnEditOn(" + record.id + ")");
+    const newAppendedTr = document.getElementById(tr.id);
     
     newAppendedTr.appendChild(th);
 
     newAppendedTr.appendChild(tdName);
-    const appendedTdName = document.getElementById("td-name" + record.id);
+    document.getElementById(tdName.id).setAttribute( "onClick", "turnEditOn(" + record.id + ")");
+    const appendedTdName = document.getElementById(tdName.id);
     appendedTdName.appendChild(nameText);
     appendedTdName.appendChild(nameInputDiv);
-    const appendedNameInputDiv = document.getElementById("name-input" + record.id);
+    const appendedNameInputDiv = document.getElementById(nameInputDiv.id);
     appendedNameInputDiv.appendChild(nameInputBox);
 
     newAppendedTr.appendChild(tdEmail);
-    const appendedTdEmail = document.getElementById("td-email" + record.id);
+    document.getElementById(tdEmail.id).setAttribute( "onClick", "turnEditOn(" + record.id + ")");
+    const appendedTdEmail = document.getElementById(tdEmail.id);
     appendedTdEmail.appendChild(emailText);
     appendedTdEmail.appendChild(emailInputDiv);
-    const appendedEmailInputDiv = document.getElementById("email-input" + record.id);
+    const appendedEmailInputDiv = document.getElementById(emailInputDiv.id);
     appendedEmailInputDiv.appendChild(emailInputBox);
 
 
     newAppendedTr.appendChild(tdSaveBtn);
     tdSaveBtn.appendChild(btnSave);
-    document.getElementById("save-btn" + record.id).setAttribute( "onClick", "submitEditRec(" + record.id + ")");
-    
+    // document.getElementById("save-btn" + record.id).setAttribute( "onClick", "submitEditRec(" + record.id + ")");
+    // document.getElementById("save-btn" + record.id).addEventListener("click", my-func);
     newAppendedTr.appendChild(tdCancelBtn);
     tdCancelBtn.appendChild(btnCancel);
-    document.getElementById("cancel-btn" + record.id).setAttribute( "onClick", "turnEditOff(" + record.id + ")");    
+    document.getElementById(btnCancel.id).setAttribute( "onClick", "turnEditOff(" + record.id + ")");    
 
     newAppendedTr.appendChild(tdDelBtn);
     tdDelBtn.appendChild(btnDelete);
-    document.getElementById("delete-btn" + record.id).setAttribute( "onClick", "sendDELETEequest(" + record.id + ")");
+    document.getElementById(btnDelete.id).setAttribute( "onClick", "sendDELETEequest(" + record.id + ")");
     
 }
 
@@ -248,26 +254,36 @@ function toggleEdit(lineID) {
 
 function turnEditOn(lineID) {
     console.log('turnEditOn');
+
+    if (isEditOn) {
+        turnEditOff(editOpenID);
+    }
+
     document.getElementById("name-text" + lineID).hidden = true;
     document.getElementById("name-input" + lineID).hidden = false;
     document.getElementById("email-text" + lineID).hidden = true;
     document.getElementById("email-input" + lineID).hidden = false;
     document.getElementById("save-btn" + lineID).hidden = false;
-    // document.getElementById("save-btn" + lineID).disabled = !document.getElementById("save-btn" + lineID).disabled;
     
     document.getElementById("cancel-btn" + lineID).hidden = false; 
+
+    isEditOn = true;
+    editOpenID = lineID;
 }
 
 function turnEditOff(lineID) {
     console.log('turnEditOff');
+
     document.getElementById("name-text" + lineID).hidden = false;
     document.getElementById("name-input" + lineID).hidden = true;
     document.getElementById("email-text" + lineID).hidden = false;
     document.getElementById("email-input" + lineID).hidden = true;
     document.getElementById("save-btn" + lineID).hidden = true;
-    // document.getElementById("save-btn" + lineID).disabled = !document.getElementById("save-btn" + lineID).disabled;
     
     document.getElementById("cancel-btn" + lineID).hidden = true; 
+
+    isEditOn = false;
+    editOpenID = 0;
 }
 
 
@@ -281,8 +297,6 @@ function init() {
 
     const newRecForm = document.getElementById("add-record");
     newRecForm.addEventListener("submit", submitNewRec);
-
-    
 
     
     
