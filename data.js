@@ -90,6 +90,46 @@ function sendPUTRequest(url, body) {
 }
 
 function addRecordToPage(record) {
+    const id = record.id;
+    const name = record.name;
+    const email = record.email;
+    const trTemplate = `
+        <tr id="tr${id}">
+            <th scope="row">${id}</th>
+            <td id="td-name${id}" onclick="turnEditOn(${id})">
+                <div id="name-text${id}">${name}</div>
+                <div id="name-input${id}" hidden>
+                    <input type="text" value="${name}" class="form-control">
+                </div>
+            </td>
+            <td id="td-email${id}" onclick="turnEditOn(${id})">
+                <div id="email-text${id}">${email}</div>
+                <div id="email-input${id}" hidden>
+                    <input type="text" value="${email}" class="form-control">
+                </div>
+            </td>
+            <td id="td-save-btn${id}">
+                <button type="button" id="save-btn${id}" hidden class="btn btn-success btn-sm" onclick="submitEditRec(${id})">Save</button>
+            </td>
+            <td id="td-cancel-btn${id}">
+                <button type="button" id="cancel-btn${id}" hidden class="btn btn-warning btn-sm" onclick="turnEditOff(${id})">Cancel</button>
+            </td>
+            <td id="td-del-btn${id}">
+                <button type="button" id="delete-btn${id}" class="btn btn-danger btn-sm" onclick="sendDELETEequest(${id})">Delete</button>
+            </td>    
+            </td>
+        </tr>
+    `;
+
+    // Adding a new TR of the 'record' to the table using the template
+    const table = document.querySelector("table");
+    table.innerHTML += trTemplate;
+    table.append;
+}
+
+
+// * old method for building each new TR *
+function addRecordToPageOld(record) {
     // console.log('The record=', record);
 
     // Building TR + ID
