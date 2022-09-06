@@ -31,19 +31,19 @@
                     <form id="add-record">
                         <tr>
                             <th  scope="row">
-                                <button class="btn btn-secondary btn-sm">+</button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="toggle-add-rec" onclick="showHideAddNew()">+</button>
                             </th>
                             <td>
-                                <div id="name-input-new">
+                                <div id="name-input-new" hidden>
                                     <input type="text" class="form-control" placeholder="Name" id="new-name">
                                 </div>
                             </td>
                             <td>
-                                <div id="email-input-new">
+                                <div id="email-input-new" hidden>
                                     <input type="text" class="form-control" placeholder="E-mail" id="new-email">
                                 </div>
                             </td>
-                            <td colspan="3"><button type="submit" class="btn btn-primary mb-2" id="submit-btn">Add New Record</button></td>
+                            <td colspan="3"><button type="submit" class="btn btn-primary mb-2" id="submit-btn" hidden>Add New Record</button></td>
                         </tr>
                     </form>
                   <!-- <tr id="tr999" onclick="editNew1()">

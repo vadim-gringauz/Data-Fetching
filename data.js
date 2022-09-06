@@ -286,6 +286,22 @@ function turnEditOff(lineID) {
     editOpenID = 0;
 }
 
+function showHideAddNew() {
+    if (document.getElementById("name-input-new").hidden) {
+        console.log('show new');
+        document.getElementById("name-input-new").hidden = false;
+        document.getElementById("email-input-new").hidden = false;
+        document.getElementById("submit-btn").hidden = false;
+        document.getElementById("toggle-add-rec").innerHTML = "X";
+    } else {
+        console.log('hide new');
+        document.getElementById("name-input-new").hidden = true;
+        document.getElementById("email-input-new").hidden = true;
+        document.getElementById("submit-btn").hidden = true;
+        document.getElementById("toggle-add-rec").innerHTML = "+";
+    }
+}
+
 
 function editNew1() {
     console.log('new editttt');
