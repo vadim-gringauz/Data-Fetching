@@ -85,7 +85,8 @@ function sendPUTRequest(url, body) {
         })
     })
     .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        throw(error);
     })
 }
 
@@ -99,13 +100,13 @@ function addRecordToPage(record) {
             <td id="td-name${id}" onclick="turnEditOn(${id})">
                 <div id="name-text${id}">${name}</div>
                 <div id="name-input${id}" hidden>
-                    <input type="text" value="${name}" class="form-control">
+                    <input id="name-input-box${id}" type="text" value="${name}" class="form-control">
                 </div>
             </td>
             <td id="td-email${id}" onclick="turnEditOn(${id})">
                 <div id="email-text${id}">${email}</div>
                 <div id="email-input${id}" hidden>
-                    <input type="text" value="${email}" class="form-control">
+                    <input id="email-input-box${id}" type="text" value="${email}" class="form-control">
                 </div>
             </td>
             <td id="td-save-btn${id}">
@@ -262,8 +263,8 @@ function submitEditRec(id) {
     console.log('edit rec submit!!! id=', id);
 
 
-    const nameToSubmit = document.getElementById("name-input" + id).firstChild.value;
-    const emailToSubmit = document.getElementById("email-input" + id).firstChild.value;
+    const nameToSubmit = document.getElementById("name-input-box" + id).value;
+    const emailToSubmit = document.getElementById("email-input-box" + id).value;
     console.log(nameToSubmit, emailToSubmit);
 
     const submissionObj = {
