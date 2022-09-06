@@ -190,8 +190,8 @@ function addRecordToPage(record) {
 
     newAppendedTr.appendChild(tdSaveBtn);
     tdSaveBtn.appendChild(btnSave);
-    // document.getElementById("save-btn" + record.id).setAttribute( "onClick", "submitEditRec(" + record.id + ")");
-    // document.getElementById("save-btn" + record.id).addEventListener("click", my-func);
+    document.getElementById("save-btn" + record.id).setAttribute( "onClick", "submitEditRec(" + record.id + ")");
+    
     newAppendedTr.appendChild(tdCancelBtn);
     tdCancelBtn.appendChild(btnCancel);
     document.getElementById(btnCancel.id).setAttribute( "onClick", "turnEditOff(" + record.id + ")");    
