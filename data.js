@@ -5,44 +5,53 @@ const serverURL = "https://630f59da37925634188d7eb8.mockapi.io/form/list";
 let isEditOn = false;
 let editOpenID = 0;
 
-function getData(url) {
-    console.log('Server= ', url);
-    console.log('getting data');
+async function getData(url) {
+    console.log('loading');
+    // window.alert("loading");
+    // Loading spinner - ON
+    // document.getElementById("loading").hidden = false;
 
-    fetch(url).then((response) => {
-        response.json().then((result) => {
-            // console.log(result);
-            result.forEach((record, index) => {
-                // console.log('record:',index,'name= ', record.name);
-                addRecordToPage(record);
-            })
+    try {
+        console.log('Done loading');
+        console.log('Server= ', url);
+        console.log('getting data');
+        const response = await fetch(url);
+        const result = await response.json();
+        // console.log(result);
+        result.forEach((record) => {
+            // console.log('record:',index,'name= ', record.name);
+            addRecordToPage(record);
         })
-    })
-    .catch((error) => {
-        console.log(error);
-    }) 
-
+        
+    } catch(err) {
+        console.log('error:', err);
+        window.alert("error retrieving data");
+    } finally {
+        // Loading spinner - off!
+        // document.getElementById("loading").hidden = true;
+    }
+    // console.log('after catch');
 }
 
-function sendPOSTRequest(url, body) {
-    console.log('posting!!!');
-
-    fetch(url, {
-        method: "POST",
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    })
-    .then((response) => {
-        response.json().then((result) => {
-            console.log(result);
-            location.reload();
+async function sendPOSTRequest(url, body) {
+    try {
+        console.log('posting!!!');
+    
+        const response = fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(body)
         })
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+        
+        const result = response.json();
+        console.log(result);
+        location.reload();
+    } catch(err) {
+        console.log('error:', err);
+        window.alert("error retrieving data");
+    }
 }
 
 function sendDELETEequest(idToDelete) {
@@ -126,122 +135,127 @@ function addRecordToPage(record) {
     const table = document.querySelector("table");
     table.innerHTML += trTemplate;
     table.append;
+
+
+    const newRecForm = document.getElementById("add-record");
+    // newRecForm.addEventListener("submit", submitNewRec);
+    newRecForm.addEventListener("submit", myFunc);
 }
 
 
 // * old method for building each new TR *
-function addRecordToPageOld(record) {
-    // console.log('The record=', record);
+// function addRecordToPageOld(record) {
+//     // console.log('The record=', record);
 
-    // Building TR + ID
-    const tr = document.createElement("tr");
-    tr.id = "tr" + record.id;
+//     // Building TR + ID
+//     const tr = document.createElement("tr");
+//     tr.id = "tr" + record.id;
 
-    const th = document.createElement("th");
-    th.scope = "row";
-    th.innerHTML = record.id;
+//     const th = document.createElement("th");
+//     th.scope = "row";
+//     th.innerHTML = record.id;
 
-    //  Building TD NAME
-    const tdName = document.createElement("td");
-    tdName.id = "td-name" + record.id;
-    // div as text inside the TD = visible
-    const nameText = document.createElement("div");
-    nameText.id = "name-text" + record.id;
-    nameText.innerHTML = record.name;
-    // div as input inside the TD = hidden
-    const nameInputDiv = document.createElement("div");
-    nameInputDiv.id = "name-input" + record.id;
-    nameInputDiv.hidden = true;
-    // nameInputDiv.setAttribute("style", "width:5px");
-    // input box inside the div
-    const nameInputBox = document.createElement("input");
-    nameInputBox.type = "text";
-    nameInputBox.value = record.name;
-    nameInputBox.className = "form-control";
+//     //  Building TD NAME
+//     const tdName = document.createElement("td");
+//     tdName.id = "td-name" + record.id;
+//     // div as text inside the TD = visible
+//     const nameText = document.createElement("div");
+//     nameText.id = "name-text" + record.id;
+//     nameText.innerHTML = record.name;
+//     // div as input inside the TD = hidden
+//     const nameInputDiv = document.createElement("div");
+//     nameInputDiv.id = "name-input" + record.id;
+//     nameInputDiv.hidden = true;
+//     // nameInputDiv.setAttribute("style", "width:5px");
+//     // input box inside the div
+//     const nameInputBox = document.createElement("input");
+//     nameInputBox.type = "text";
+//     nameInputBox.value = record.name;
+//     nameInputBox.className = "form-control";
 
-    //  Building TD EMAIL
-    const tdEmail = document.createElement("td");
-    tdEmail.id = "td-email" + record.id;
-    // div as text inside the TD = visible
-    const emailText = document.createElement("div");
-    emailText.id = "email-text" + record.id;
-    emailText.innerHTML = record.email;
-    // div as input inside the TD = hidden
-    const emailInputDiv = document.createElement("div");
-    emailInputDiv.id = "email-input" + record.id;
-    emailInputDiv.hidden = true;
-    // emailInputDiv.setAttribute("style", "width:5px");
-    // input box inside the div
-    const emailInputBox = document.createElement("input");
-    emailInputBox.type = "text";
-    emailInputBox.value = record.email;
-    emailInputBox.className = "form-control";
+//     //  Building TD EMAIL
+//     const tdEmail = document.createElement("td");
+//     tdEmail.id = "td-email" + record.id;
+//     // div as text inside the TD = visible
+//     const emailText = document.createElement("div");
+//     emailText.id = "email-text" + record.id;
+//     emailText.innerHTML = record.email;
+//     // div as input inside the TD = hidden
+//     const emailInputDiv = document.createElement("div");
+//     emailInputDiv.id = "email-input" + record.id;
+//     emailInputDiv.hidden = true;
+//     // emailInputDiv.setAttribute("style", "width:5px");
+//     // input box inside the div
+//     const emailInputBox = document.createElement("input");
+//     emailInputBox.type = "text";
+//     emailInputBox.value = record.email;
+//     emailInputBox.className = "form-control";
 
-    //  Building TD for save button
-    const tdSaveBtn = document.createElement("td");
-    tdSaveBtn.id = "td-save-btn" + record.id;
-    const btnSave = document.createElement("button");
-    btnSave.id = "save-btn" + record.id;
-    btnSave.type = "button";
-    btnSave.hidden = true;
-    btnSave.className = "btn btn-success btn-sm";
-    btnSave.innerHTML = "Save";
+//     //  Building TD for save button
+//     const tdSaveBtn = document.createElement("td");
+//     tdSaveBtn.id = "td-save-btn" + record.id;
+//     const btnSave = document.createElement("button");
+//     btnSave.id = "save-btn" + record.id;
+//     btnSave.type = "button";
+//     btnSave.hidden = true;
+//     btnSave.className = "btn btn-success btn-sm";
+//     btnSave.innerHTML = "Save";
 
-    //  Building TD for cancel button
-    const tdCancelBtn = document.createElement("td");
-    tdCancelBtn.id = "td-cancel-btn" + record.id;
-    const btnCancel = document.createElement("button");
-    btnCancel.id = "cancel-btn" + record.id;
-    btnCancel.type = "button";
-    btnCancel.hidden = true;
-    btnCancel.className = "btn btn-warning btn-sm";
-    btnCancel.innerHTML = "Cancel";
+//     //  Building TD for cancel button
+//     const tdCancelBtn = document.createElement("td");
+//     tdCancelBtn.id = "td-cancel-btn" + record.id;
+//     const btnCancel = document.createElement("button");
+//     btnCancel.id = "cancel-btn" + record.id;
+//     btnCancel.type = "button";
+//     btnCancel.hidden = true;
+//     btnCancel.className = "btn btn-warning btn-sm";
+//     btnCancel.innerHTML = "Cancel";
 
-    //  Building TD for DELETE button
-    const tdDelBtn = document.createElement("td");
-    tdDelBtn.id = "td-del-btn" + record.id;
-    const btnDelete = document.createElement("button");
-    btnDelete.id = "delete-btn" + record.id;
-    btnDelete.type = "button";
-    btnDelete.className = "btn btn-danger btn-sm";
-    btnDelete.innerHTML = "Delete";
+//     //  Building TD for DELETE button
+//     const tdDelBtn = document.createElement("td");
+//     tdDelBtn.id = "td-del-btn" + record.id;
+//     const btnDelete = document.createElement("button");
+//     btnDelete.id = "delete-btn" + record.id;
+//     btnDelete.type = "button";
+//     btnDelete.className = "btn btn-danger btn-sm";
+//     btnDelete.innerHTML = "Delete";
 
-    // Appending all objects:
-    document.getElementById("table-body").appendChild(tr);
-    const newAppendedTr = document.getElementById(tr.id);
+//     // Appending all objects:
+//     document.getElementById("table-body").appendChild(tr);
+//     const newAppendedTr = document.getElementById(tr.id);
     
-    newAppendedTr.appendChild(th);
+//     newAppendedTr.appendChild(th);
 
-    newAppendedTr.appendChild(tdName);
-    document.getElementById(tdName.id).setAttribute( "onClick", "turnEditOn(" + record.id + ")");
-    const appendedTdName = document.getElementById(tdName.id);
-    appendedTdName.appendChild(nameText);
-    appendedTdName.appendChild(nameInputDiv);
-    const appendedNameInputDiv = document.getElementById(nameInputDiv.id);
-    appendedNameInputDiv.appendChild(nameInputBox);
+//     newAppendedTr.appendChild(tdName);
+//     document.getElementById(tdName.id).setAttribute( "onClick", "turnEditOn(" + record.id + ")");
+//     const appendedTdName = document.getElementById(tdName.id);
+//     appendedTdName.appendChild(nameText);
+//     appendedTdName.appendChild(nameInputDiv);
+//     const appendedNameInputDiv = document.getElementById(nameInputDiv.id);
+//     appendedNameInputDiv.appendChild(nameInputBox);
 
-    newAppendedTr.appendChild(tdEmail);
-    document.getElementById(tdEmail.id).setAttribute( "onClick", "turnEditOn(" + record.id + ")");
-    const appendedTdEmail = document.getElementById(tdEmail.id);
-    appendedTdEmail.appendChild(emailText);
-    appendedTdEmail.appendChild(emailInputDiv);
-    const appendedEmailInputDiv = document.getElementById(emailInputDiv.id);
-    appendedEmailInputDiv.appendChild(emailInputBox);
+//     newAppendedTr.appendChild(tdEmail);
+//     document.getElementById(tdEmail.id).setAttribute( "onClick", "turnEditOn(" + record.id + ")");
+//     const appendedTdEmail = document.getElementById(tdEmail.id);
+//     appendedTdEmail.appendChild(emailText);
+//     appendedTdEmail.appendChild(emailInputDiv);
+//     const appendedEmailInputDiv = document.getElementById(emailInputDiv.id);
+//     appendedEmailInputDiv.appendChild(emailInputBox);
 
 
-    newAppendedTr.appendChild(tdSaveBtn);
-    tdSaveBtn.appendChild(btnSave);
-    document.getElementById("save-btn" + record.id).setAttribute( "onClick", "submitEditRec(" + record.id + ")");
+//     newAppendedTr.appendChild(tdSaveBtn);
+//     tdSaveBtn.appendChild(btnSave);
+//     document.getElementById("save-btn" + record.id).setAttribute( "onClick", "submitEditRec(" + record.id + ")");
     
-    newAppendedTr.appendChild(tdCancelBtn);
-    tdCancelBtn.appendChild(btnCancel);
-    document.getElementById(btnCancel.id).setAttribute( "onClick", "turnEditOff(" + record.id + ")");    
+//     newAppendedTr.appendChild(tdCancelBtn);
+//     tdCancelBtn.appendChild(btnCancel);
+//     document.getElementById(btnCancel.id).setAttribute( "onClick", "turnEditOff(" + record.id + ")");    
 
-    newAppendedTr.appendChild(tdDelBtn);
-    tdDelBtn.appendChild(btnDelete);
-    document.getElementById(btnDelete.id).setAttribute( "onClick", "sendDELETEequest(" + record.id + ")");
+//     newAppendedTr.appendChild(tdDelBtn);
+//     tdDelBtn.appendChild(btnDelete);
+//     document.getElementById(btnDelete.id).setAttribute( "onClick", "sendDELETEequest(" + record.id + ")");
     
-}
+// }
 
 function submitNewRec(e) {
     e.preventDefault();
@@ -276,22 +290,22 @@ function submitEditRec(id) {
 }
 
 
-function toggleEdit(lineID) {
-    console.log('edit button clicked');
-    document.getElementById("name-text" + lineID).hidden = !document.getElementById("name-text" + lineID).hidden;
-    document.getElementById("name-input" + lineID).hidden = !document.getElementById("name-input" + lineID).hidden;
-    document.getElementById("email-text" + lineID).hidden = !document.getElementById("email-text" + lineID).hidden;
-    document.getElementById("email-input" + lineID).hidden = !document.getElementById("email-input" + lineID).hidden;
-    document.getElementById("save-btn" + lineID).hidden = !document.getElementById("save-btn" + lineID).hidden;
-    // document.getElementById("save-btn" + lineID).disabled = !document.getElementById("save-btn" + lineID).disabled;
+// function toggleEdit(lineID) {
+//     console.log('edit button clicked');
+//     document.getElementById("name-text" + lineID).hidden = !document.getElementById("name-text" + lineID).hidden;
+//     document.getElementById("name-input" + lineID).hidden = !document.getElementById("name-input" + lineID).hidden;
+//     document.getElementById("email-text" + lineID).hidden = !document.getElementById("email-text" + lineID).hidden;
+//     document.getElementById("email-input" + lineID).hidden = !document.getElementById("email-input" + lineID).hidden;
+//     document.getElementById("save-btn" + lineID).hidden = !document.getElementById("save-btn" + lineID).hidden;
+//     // document.getElementById("save-btn" + lineID).disabled = !document.getElementById("save-btn" + lineID).disabled;
     
-    const editCancelBtn = document.getElementById("edit-btn" + lineID);
-    if (editCancelBtn.innerHTML == "Edit") {
-        editCancelBtn.innerHTML = "Cancel";
-    } else {
-        editCancelBtn.innerHTML = "Edit";
-    }
-}
+//     const editCancelBtn = document.getElementById("edit-btn" + lineID);
+//     if (editCancelBtn.innerHTML == "Edit") {
+//         editCancelBtn.innerHTML = "Cancel";
+//     } else {
+//         editCancelBtn.innerHTML = "Edit";
+//     }
+// }
 
 function turnEditOn(lineID) {
     console.log('turnEditOn');
@@ -348,12 +362,20 @@ function editNew1() {
     console.log('new editttt');
 }
 
+function myFunc () {
+    console.log('my func');
+}
+
 function init() {
     getData(serverURL);
-    
+    console.log('after getData');
 
     const newRecForm = document.getElementById("add-record");
-    newRecForm.addEventListener("submit", submitNewRec);
+    // newRecForm.addEventListener("submit", submitNewRec);
+    console.log(newRecForm.addEventListener("submit", myFunc));
+    
+    
+    // document.getElementById("submit-btn").addEventListener("onclick", myFunc);
 
     
     
