@@ -33,24 +33,24 @@
                 </thead>
                 <tbody id="table-body">
                     <tr>
+                        <form id="add-record-form"></form>
                             <th  scope="row">
                                 <button type="button" class="btn btn-secondary btn-sm" id="toggle-add-rec">+</button>
                             </th>
                             <td>
-                                <div id="name-input-new" class="d-none">
+                                <div id="name-input-new" class="invisible">
                                     <input type="text" class="form-control" placeholder="Name" id="new-name">
                                 </div>
                             </td>
                             <td>
-                                <div id="email-input-new" class="d-none">
+                                <div id="email-input-new" class="invisible">
                                     <input type="text" class="form-control" placeholder="E-mail" id="new-email">
                                 </div>
                             </td>
                             <td colspan="3">
-                                <form id="add-record-form">
-                                    <button type="button" class="btn btn-primary mb-2 invisible" id="submit-form-btn">Add New Record</button>
-                                </form>
+                                <button type="submit" class="btn btn-primary mb-2 invisible" id="submit-form-btn">Add New Record</button>
                             </td>
+                        </form>
                     </tr>
                     <!-- <tr id="tr999">
                         <th scope="row">999</th>

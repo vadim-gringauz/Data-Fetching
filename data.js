@@ -18,7 +18,6 @@ async function getData(url) {
             console.log('record:',index,'name= ', record.name);
             addRecordToPage(record);
         })
-       
        /* now adding event-listners for each record */  
        
     } catch(err) {
@@ -240,9 +239,9 @@ function turnEditOff(lineID) {
  * AND BOX
  ********************************/
 function showHideAddNew() {
-    document.getElementById("name-input-new").classList.toggle("invisible")
-    document.getElementById("email-input-new").classList.toggle("invisible")
-    document.getElementById("submit-form-btn").classList.toggle("invisible")
+    document.getElementById("name-input-new").classList.toggle("invisible");
+    document.getElementById("email-input-new").classList.toggle("invisible");
+    document.getElementById("submit-form-btn").classList.toggle("invisible");
     if (document.getElementById("toggle-add-rec").innerHTML == "+") {
         console.log('show new');
         document.getElementById("toggle-add-rec").innerHTML = "X";
@@ -272,11 +271,14 @@ function init() {
     // addRecordToPage({id: 111, name: "Eli", email: "@#$"});
 
     getData(serverURL);
-    console.log('after getData');        
+    
+    setTimeout(() => {
+        // window.alert("done loading");
+        document.getElementById("toggle-add-rec").addEventListener("click", showHideAddNew);
+        document.getElementById("submit-form-btn").addEventListener("click", submitNewRec);
+        document.getElementById("add-record-form").addEventListener("submit", submitNewRec);
+    }, 1000);
 
-    document.getElementById("toggle-add-rec").addEventListener("click", showHideAddNew);
-    // document.getElementById("submit-form-btn").addEventListener("click", submitNewRec);
-    // document.getElementById("add-record-form").addEventListener("submit", submitNewRec);
 }
 
 /**********************
