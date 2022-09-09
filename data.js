@@ -1,10 +1,3 @@
-// URL to connect to on FETCH
-const serverURL = "https://630f59da37925634188d7eb8.mockapi.io/form/list";
-
-// to know if some record is in Edit mode
-let isEditOn = false;
-let editOpenID = 0;
-
 
 /*********************************
 * GET ALL RECORDS FROM DATA
@@ -15,7 +8,7 @@ async function getData(url) {
         console.log('loading');
         // window.alert("loading");
         // Loading spinner - ON
-        document.getElementById("loading").hidden = false;
+        document.getElementById("loading").classList.toggle("invisible");
         
         console.log('Server= ', url);
         console.log('getting data');
@@ -25,12 +18,6 @@ async function getData(url) {
             console.log('record:',index,'name= ', record.name);
             addRecordToPage(record);
         })
-        
-        /* adds event listner only AFTER all 
-        * records were added to html        */
-       initAfterApendData();
-       const newRecForm = document.getElementById("add-record-form");
-       newRecForm.addEventListener("submit", submitNewRec);
        
        /* now adding event-listners for each record */  
        
@@ -39,7 +26,7 @@ async function getData(url) {
         window.alert("error retrieving data");
     } finally {
         /* Loading spinner - off! */
-        document.getElementById("loading").hidden = true;
+        document.getElementById("loading").classList.toggle("invisible");
         console.log('Done loading');
     }
     console.log('after catch');
@@ -52,7 +39,7 @@ async function sendPOSTRequest(url, body) {
     try {
         console.log('posting!!!');
     
-        const response = fetch(url, {
+        const response = await fetch(url, {
             method: "POST",
             headers: {
                 'Content-type': 'application/json'
@@ -60,7 +47,7 @@ async function sendPOSTRequest(url, body) {
             body: JSON.stringify(body)
         })
         
-        const result = response.json();
+        const result = await response.json();
         console.log(result);
         location.reload();
     } catch(err) {
@@ -133,21 +120,21 @@ function addRecordToPage(record) {
             <th scope="row">${id}</th>
             <td id="td-name${id}" onclick="turnEditOn(${id})">
                 <div id="name-text${id}">${name}</div>
-                <div id="name-input${id}" hidden>
+                <div id="name-input${id}" class="d-none">
                     <input id="name-input-box${id}" type="text" value="${name}" class="form-control">
                 </div>
             </td>
             <td id="td-email${id}" onclick="turnEditOn(${id})">
                 <div id="email-text${id}">${email}</div>
-                <div id="email-input${id}" hidden>
+                <div id="email-input${id}" class="d-none">
                     <input id="email-input-box${id}" type="text" value="${email}" class="form-control">
                 </div>
             </td>
             <td id="td-save-btn${id}">
-                <button type="button" id="save-btn${id}" hidden class="btn btn-success btn-sm" onclick="submitEditRec(${id})">Save</button>
+                <button type="button" id="save-btn${id}" class="btn btn-success btn-sm invisible" onclick="submitEditRec(${id})">Save</button>
             </td>
             <td id="td-cancel-btn${id}">
-                <button type="button" id="cancel-btn${id}" hidden class="btn btn-warning btn-sm" onclick="turnEditOff(${id})">Cancel</button>
+                <button type="button" id="cancel-btn${id}" class="btn btn-warning btn-sm invisible" onclick="turnEditOff(${id})">Cancel</button>
             </td>
             <td id="td-del-btn${id}">
                 <button type="button" id="delete-btn${id}" class="btn btn-danger btn-sm" onclick="sendDELETEequest(${id})">Delete</button>
@@ -176,7 +163,7 @@ function submitNewRec(e) {
 
     const nameToSubmit = document.getElementById("new-name").value;
     const emailToSubmit = document.getElementById("new-email").value;
-    // console.log(nameToSubmit, emailToSubmit);
+    console.log(nameToSubmit, emailToSubmit);
 
     const submissionObj = {
         name: nameToSubmit,
@@ -218,13 +205,12 @@ function turnEditOn(lineID) {
         turnEditOff(editOpenID);
     }
 
-    document.getElementById("name-text" + lineID).hidden = true;
-    document.getElementById("name-input" + lineID).hidden = false;
-    document.getElementById("email-text" + lineID).hidden = true;
-    document.getElementById("email-input" + lineID).hidden = false;
-    document.getElementById("save-btn" + lineID).hidden = false;
-    
-    document.getElementById("cancel-btn" + lineID).hidden = false; 
+    document.getElementById("name-text" + lineID).classList.toggle("d-none");
+    document.getElementById("name-input" + lineID).classList.toggle("d-none");
+    document.getElementById("email-text" + lineID).classList.toggle("d-none");
+    document.getElementById("email-input" + lineID).classList.toggle("d-none");
+    document.getElementById("save-btn" + lineID).classList.toggle("invisible");
+    document.getElementById("cancel-btn" + lineID).classList.toggle("invisible");
 
     isEditOn = true;
     editOpenID = lineID;
@@ -238,13 +224,12 @@ function turnEditOn(lineID) {
 function turnEditOff(lineID) {
     console.log('turnEditOff');
 
-    document.getElementById("name-text" + lineID).hidden = false;
-    document.getElementById("name-input" + lineID).hidden = true;
-    document.getElementById("email-text" + lineID).hidden = false;
-    document.getElementById("email-input" + lineID).hidden = true;
-    document.getElementById("save-btn" + lineID).hidden = true;
-    
-    document.getElementById("cancel-btn" + lineID).hidden = true; 
+    document.getElementById("name-text" + lineID).classList.toggle("d-none");
+    document.getElementById("name-input" + lineID).classList.toggle("d-none");
+    document.getElementById("email-text" + lineID).classList.toggle("d-none");
+    document.getElementById("email-input" + lineID).classList.toggle("d-none");
+    document.getElementById("save-btn" + lineID).classList.toggle("invisible");
+    document.getElementById("cancel-btn" + lineID).classList.toggle("invisible");
 
     isEditOn = false;
     editOpenID = 0;
@@ -255,32 +240,56 @@ function turnEditOff(lineID) {
  * AND BOX
  ********************************/
 function showHideAddNew() {
-    if (document.getElementById("name-input-new").hidden) {
+    document.getElementById("name-input-new").classList.toggle("invisible")
+    document.getElementById("email-input-new").classList.toggle("invisible")
+    document.getElementById("submit-form-btn").classList.toggle("invisible")
+    if (document.getElementById("toggle-add-rec").innerHTML == "+") {
         console.log('show new');
-        document.getElementById("name-input-new").hidden = false;
-        document.getElementById("email-input-new").hidden = false;
-        document.getElementById("submit-form-btn").hidden = false;
         document.getElementById("toggle-add-rec").innerHTML = "X";
     } else {
         console.log('hide new');
-        document.getElementById("name-input-new").hidden = true;
-        document.getElementById("email-input-new").hidden = true;
-        document.getElementById("submit-form-btn").hidden = true;
         document.getElementById("toggle-add-rec").innerHTML = "+";
     }
 }
 
+/********************************
+ * GENERAL VARIABLES DECLARATION
+ ********************************/
 
+/* URL to connect to on FETCH */
+const serverURL = "https://630f59da37925634188d7eb8.mockapi.io/form/list";
+
+/* to know if some record is in Edit mode */
+let isEditOn = false;
+let editOpenID = 0;
+
+/*******************
+ * MY INIT FUNCTION
+ *******************/
 function init() {
+
     /* adds only one record, not from data, for debugging */
     // addRecordToPage({id: 111, name: "Eli", email: "@#$"});
+
     getData(serverURL);
     console.log('after getData');        
+
+    document.getElementById("toggle-add-rec").addEventListener("click", showHideAddNew);
+    // document.getElementById("submit-form-btn").addEventListener("click", submitNewRec);
+    // document.getElementById("add-record-form").addEventListener("submit", submitNewRec);
 }
 
+/**********************
+ * MORE INIT COMMANDS,
+ * BUT AFTER DATA ADDED
+ * TO PAGE
+ **********************/
 function initAfterApendData() {
     console.log('init after append data');
-
+    // const newRecForm = document.getElementById("add-record-form");
+    // const newRecForm = document.querySelector("form");
+    // console.log(newRecForm);
+    // newRecForm.addEventListener("submit", submitNewRec);
     
 }
 

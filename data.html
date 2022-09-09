@@ -15,7 +15,7 @@
             <h1 class="display-6 text-danger">My Get/POST DATA from Server Page</h1>
         </div>
         <div  class="d-flex justify-content-center">
-            <div id="loading" class="spinner-border text-danger" role="status" hidden>
+            <div id="loading" class="spinner-border text-danger invisible" role="status">
                 <span class="sr-only"></span>
             </div>
         </div>
@@ -33,44 +33,44 @@
                 </thead>
                 <tbody id="table-body">
                     <tr>
-                        <form id="add-record-form">
                             <th  scope="row">
-                                <button type="button" class="btn btn-secondary btn-sm" id="toggle-add-rec" onclick="showHideAddNew()">+</button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="toggle-add-rec">+</button>
                             </th>
                             <td>
-                                <div id="name-input-new" hidden>
+                                <div id="name-input-new" class="d-none">
                                     <input type="text" class="form-control" placeholder="Name" id="new-name">
                                 </div>
                             </td>
                             <td>
-                                <div id="email-input-new" hidden>
+                                <div id="email-input-new" class="d-none">
                                     <input type="text" class="form-control" placeholder="E-mail" id="new-email">
                                 </div>
                             </td>
                             <td colspan="3">
-                                <button type="submit" class="btn btn-primary mb-2" id="submit-form-btn" hidden>Add New Record</button>
+                                <form id="add-record-form">
+                                    <button type="button" class="btn btn-primary mb-2 invisible" id="submit-form-btn">Add New Record</button>
+                                </form>
                             </td>
-                        </form>
                     </tr>
                     <!-- <tr id="tr999">
                         <th scope="row">999</th>
                         <td id="td-name999" onclick="turnEditOn(999)">
                             <div id="name-text999">record.name</div>
-                            <div id="name-input999" hidden>
+                            <div id="name-input999" class="invisible">
                                 <input id="name-input-box999" type="text" value="record.name" class="form-control">
                             </div>
                         </td>
                         <td id="td-email999" onclick="turnEditOn(999)">
                             <div id="email-text999">record.email</div>
-                            <div id="email-input999" hidden>
+                            <div id="email-input999" class="invisible">
                                 <input id="email-input-box999" type="text" value="record.email" class="form-control">
                             </div>
                         </td>
                         <td id="td-save-btn999">
-                            <button type="button" id="save-btn999" hidden class="btn btn-success btn-sm" onclick="submitEditRec(999)">Save</button>
+                            <button type="button" id="save-btn999" class="btn btn-success btn-sm invisible" onclick="submitEditRec(999)">Save</button>
                         </td>
                         <td id="td-cancel-btn999">
-                            <button type="button" id="cancel-btn999" hidden class="btn btn-warning btn-sm" onclick="turnEditOff(999)">Cancel</button>
+                            <button type="button" id="cancel-btn999" class="btn btn-warning btn-sm invisible" onclick="turnEditOff(999)">Cancel</button>
                         </td>
                         <td id="td-del-btn999">
                             <button type="button" id="delete-btn999" class="btn btn-danger btn-sm" onclick="sendDELETEequest(999)">Delete</button>
