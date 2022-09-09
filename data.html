@@ -10,8 +10,8 @@
     <title>Data Managment practice</title>
 </head>
 <body>
-    <div class="container">
-        <div class="title-container">
+    <div id="main-container" class="container">
+        <div id="title-container" class="title-container">
             <h1 class="display-6 text-danger">My Get/POST DATA from Server Page</h1>
         </div>
         <div  class="d-flex justify-content-center">
@@ -32,8 +32,8 @@
                   </tr>
                 </thead>
                 <tbody id="table-body">
-                    <form id="add-record">
-                        <tr>
+                    <tr>
+                        <form id="add-record-form">
                             <th  scope="row">
                                 <button type="button" class="btn btn-secondary btn-sm" id="toggle-add-rec" onclick="showHideAddNew()">+</button>
                             </th>
@@ -47,34 +47,36 @@
                                     <input type="text" class="form-control" placeholder="E-mail" id="new-email">
                                 </div>
                             </td>
-                            <td colspan="3"><button type="submit" class="btn btn-primary mb-2" id="submit-btn" hidden>Add New Record</button></td>
-                        </tr>
-                    </form>
-                  <tr id="tr999">
-                    <th scope="row">999</th>
-                    <td id="td-name999" onclick="turnEditOn(999)">
-                        <div id="name-text999">record.name</div>
-                        <div id="name-input999" hidden>
-                            <input id="name-input-box999" type="text" value="record.name" class="form-control">
-                        </div>
-                    </td>
-                    <td id="td-email999" onclick="turnEditOn(999)">
-                        <div id="email-text999">record.email</div>
-                        <div id="email-input999" hidden>
-                            <input id="email-input-box999" type="text" value="record.email" class="form-control">
-                        </div>
-                    </td>
-                    <td id="td-save-btn999">
-                        <button type="button" id="save-btn999" hidden class="btn btn-success btn-sm" onclick="submitEditRec(999)">Save</button>
-                    </td>
-                    <td id="td-cancel-btn999">
-                        <button type="button" id="cancel-btn999" hidden class="btn btn-warning btn-sm" onclick="turnEditOff(999)">Cancel</button>
-                    </td>
-                    <td id="td-del-btn999">
-                        <button type="button" id="delete-btn999" class="btn btn-danger btn-sm" onclick="sendDELETEequest(999)">Delete</button>
-                    </td>    
-                    </td>
-                  </tr>
+                            <td colspan="3">
+                                <button type="submit" class="btn btn-primary mb-2" id="submit-form-btn" hidden>Add New Record</button>
+                            </td>
+                        </form>
+                    </tr>
+                    <!-- <tr id="tr999">
+                        <th scope="row">999</th>
+                        <td id="td-name999" onclick="turnEditOn(999)">
+                            <div id="name-text999">record.name</div>
+                            <div id="name-input999" hidden>
+                                <input id="name-input-box999" type="text" value="record.name" class="form-control">
+                            </div>
+                        </td>
+                        <td id="td-email999" onclick="turnEditOn(999)">
+                            <div id="email-text999">record.email</div>
+                            <div id="email-input999" hidden>
+                                <input id="email-input-box999" type="text" value="record.email" class="form-control">
+                            </div>
+                        </td>
+                        <td id="td-save-btn999">
+                            <button type="button" id="save-btn999" hidden class="btn btn-success btn-sm" onclick="submitEditRec(999)">Save</button>
+                        </td>
+                        <td id="td-cancel-btn999">
+                            <button type="button" id="cancel-btn999" hidden class="btn btn-warning btn-sm" onclick="turnEditOff(999)">Cancel</button>
+                        </td>
+                        <td id="td-del-btn999">
+                            <button type="button" id="delete-btn999" class="btn btn-danger btn-sm" onclick="sendDELETEequest(999)">Delete</button>
+                        </td>    
+                        </td>
+                    </tr> -->
                 
                                  
                 </tbody>
