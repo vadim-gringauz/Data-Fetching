@@ -5,6 +5,7 @@ const serverURL = "https://630f59da37925634188d7eb8.mockapi.io/form/list";
 let isEditOn = false;
 let editOpenID = 0;
 
+<<<<<<< Updated upstream
 function getData(url) {
     console.log('Server= ', url);
     console.log('getting data');
@@ -22,6 +23,46 @@ function getData(url) {
         console.log(error);
     }) 
 
+=======
+/*********************************
+* GET ALL RECORDS FROM DATA
+* AND ADD EACH ONE TO THE HTML TABLE
+**********************************/
+async function getData(url) {
+    try {
+        console.log('loading');
+        // window.alert("loading");
+        // Loading spinner - ON
+        document.getElementById("loading").classList.toggle("invisible");
+        
+        console.log('Server= ', url);
+        console.log('getting data');
+        const response = await fetch(url);
+        const result = await response.json();
+        result.forEach((record, index) => {
+            addRecordToPage(record);
+            console.log('record:',index,'name= ', record.name);
+            // window.alert("rec added");
+        })
+
+        // for (let i = 0; i < result.length; i++) {
+        //     const record = result[i];
+        //     addRecordToPage(record);
+        //     console.log('record:',i,'name= ', record.name);
+        //     // window.alert("rec added");
+        // }
+       /* now adding event-listners for each record */  
+       
+    } catch(err) {
+        console.log('error:', err);
+        window.alert("error retrieving data");
+    } finally {
+        /* Loading spinner - off! */
+        document.getElementById("loading").classList.toggle("invisible");
+        console.log('Done loading');
+    }
+    console.log('after catch');
+>>>>>>> Stashed changes
 }
 
 function sendPOSTRequest(url, body) {
@@ -90,6 +131,7 @@ function sendPUTRequest(url, body) {
 }
 
 function addRecordToPage(record) {
+<<<<<<< Updated upstream
     // console.log('The record=', record);
 
     // Building TR + ID
@@ -200,6 +242,53 @@ function addRecordToPage(record) {
     tdDelBtn.appendChild(btnDelete);
     document.getElementById(btnDelete.id).setAttribute( "onClick", "sendDELETEequest(" + record.id + ")");
     
+=======
+    const id = record.id;
+    const name = record.name;
+    const email = record.email;
+    // <tr id="tr${id}">
+    const trTemplate = `
+            <th scope="row">${id}</th>
+            <td id="td-name${id}" onclick="turnEditOn(${id})">
+                <div id="name-text${id}">${name}</div>
+                <div id="name-input${id}" class="d-none">
+                    <input id="name-input-box${id}" type="text" value="${name}" class="form-control">
+                </div>
+            </td>
+            <td id="td-email${id}" onclick="turnEditOn(${id})">
+                <div id="email-text${id}">${email}</div>
+                <div id="email-input${id}" class="d-none">
+                    <input id="email-input-box${id}" type="text" value="${email}" class="form-control">
+                </div>
+            </td>
+            <td id="td-save-btn${id}">
+                <button type="button" id="save-btn${id}" class="btn btn-success btn-sm invisible" onclick="submitEditRec(${id})">Save</button>
+            </td>
+            <td id="td-cancel-btn${id}">
+                <button type="button" id="cancel-btn${id}" class="btn btn-warning btn-sm invisible" onclick="turnEditOff(${id})">Cancel</button>
+            </td>
+            <td id="td-del-btn${id}">
+                <button type="button" id="delete-btn${id}" class="btn btn-danger btn-sm">Delete</button>
+            </td>  
+    `;
+            // </tr>
+            
+    // Adding a new TR of the 'record' to the table using the template
+    const tableBody = document.getElementById("table-body");
+    // tableBody.innerHTML += trTemplate;
+    const tr = document.createElement("tr");
+    tr.id = "tr" + record.id;
+    tr.innerHTML = trTemplate;
+    tableBody.appendChild(tr);
+}
+
+/*adding event listner for the new record buttons*/
+function addEventToRecord(record) {
+    // sendDELETEequest(id)
+    document.getElementById("delete-btn" + id).addEventListener("click", () => {
+        console.log('deldel', id);
+    });
+>>>>>>> Stashed changes
 }
 
 function submitNewRec(e) {
@@ -308,8 +397,31 @@ function editNew1() {
 }
 
 function init() {
+<<<<<<< Updated upstream
+=======
+
+    /* adds only one record, not from data, for debugging */
+    // addRecordToPage({id: 111, name: "Eli", email: "@#$"});
+>>>>>>> Stashed changes
     getData(serverURL);
+    // let getDataPromise = new Promise(function(resolve) {
+    //     resolve("OK");        
+    // });
+    // getDataPromise.then(() => {
+    //     console.log('promise resolved');
+        
+    // });
     
+    document.getElementById("toggle-add-rec").addEventListener("click", showHideAddNew);
+    document.getElementById("submit-form-btn").addEventListener("click", submitNewRec);
+    document.getElementById("add-record-form").addEventListener("submit", submitNewRec);
+    
+<<<<<<< Updated upstream
+=======
+    // setTimeout(() => {
+    //     // window.alert("done loading");
+    // }, 1000);
+>>>>>>> Stashed changes
 
     const newRecForm = document.getElementById("add-record");
     newRecForm.addEventListener("submit", submitNewRec);
