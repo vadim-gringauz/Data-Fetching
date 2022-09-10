@@ -17,16 +17,8 @@ async function getData(url) {
         result.forEach((record, index) => {
             addRecordToPage(record);
             console.log('record:',index,'name= ', record.name);
-            // window.alert("rec added");
         })
 
-        // for (let i = 0; i < result.length; i++) {
-        //     const record = result[i];
-        //     addRecordToPage(record);
-        //     console.log('record:',i,'name= ', record.name);
-        //     // window.alert("rec added");
-        // }
-       /* now adding event-listners for each record */  
        
     } catch(err) {
         console.log('error:', err);
@@ -144,7 +136,7 @@ function addRecordToPage(record) {
                 <button type="button" id="cancel-btn${id}" class="btn btn-warning btn-sm invisible" onclick="turnEditOff(${id})">Cancel</button>
             </td>
             <td id="td-del-btn${id}">
-                <button type="button" id="delete-btn${id}" class="btn btn-danger btn-sm">Delete</button>
+                <button type="button" id="delete-btn${id}" class="btn btn-danger btn-sm" onclick="sendDELETEequest(${id})">Delete</button>
             </td>  
     `;
     
@@ -158,13 +150,6 @@ function addRecordToPage(record) {
     tableBody.appendChild(tr);
 }
 
-/*adding event listner for the new record buttons*/
-function addEventToRecord(record) {
-    // sendDELETEequest(id)
-    document.getElementById("delete-btn" + id).addEventListener("click", () => {
-        console.log('deldel', id);
-    });
-}
 
 /****************************
  * SUBMITS (ADDS) NEW RECORD
@@ -284,23 +269,15 @@ function init() {
 
     /* adds only one record, not from data, for debugging */
     // addRecordToPage({id: 111, name: "Eli", email: "@#$"});
-    getData(serverURL);
-    // let getDataPromise = new Promise(function(resolve) {
-    //     resolve("OK");        
-    // });
-    // getDataPromise.then(() => {
-    //     console.log('promise resolved');
-        
-    // });
     
+     /* fetches all data and adds it one by oone the the HTML table-body as TRs */
+    getData(serverURL);
+    
+    /* eventListeners to the form and all the buttons */
     document.getElementById("toggle-add-rec").addEventListener("click", showHideAddNew);
     document.getElementById("submit-form-btn").addEventListener("click", submitNewRec);
     document.getElementById("add-record-form").addEventListener("submit", submitNewRec);
     
-    // setTimeout(() => {
-    //     // window.alert("done loading");
-    // }, 1000);
-
 }
 
 /**********************
